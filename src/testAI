@@ -1,0 +1,60 @@
+import pygame
+from pygame.locals import *
+
+# Initialize Pygame
+pygame.init()
+
+# Set up some constants
+WIDTH, HEIGHT = 640, 480
+SPEED = 5
+
+# Set up the display
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+
+# Set up the player
+player = pygame.image.load("player.png")
+player_rect = player.get_rect()
+player_rect.topleft = (WIDTH / 2, HEIGHT - 50)
+
+# Set up the pipe
+pipe = pygame.image.load("pipe.png")
+pipe_rect = pipe.get_rect()
+pipe_rect.topleft = (WIDTH / 2, 0)
+
+# Set up the velocity
+velocity = [0, 0]
+
+# Set up the interaction with pipe
+def check_collision(rect1, rect2):
+    if rect1.colliderect(rect2):
+        return True
+    return False
+
+# Main game loop
+running = True
+while running:
+    # Event handling
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            running = False
+        if event.type == KEYDOWN:
+            if event.key == K_UP:
+                velocity[1] = -SPEED
+
+    # Update the player position
+    player_rect.y += velocity[1]
+
+    # Check for collision with pipe
+    if check_collision(player_rect, pipe_rect):
+        print("Collision detected!")
+
+    # Draw everything
+    screen.fill((0, 0, 0))
+    screen.blit(player, player_rect)
+    screen.blit(pipe, pipe_rect)
+
+    # Update the display
+    pygame.display.flip()
+
+# Quit Pygame
+pygame.quit()
