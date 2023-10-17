@@ -17,8 +17,12 @@ class Pipe:
         # Implement the pipe's movement
         pass
     
+<<<<<<< HEAD
     #methangquangbeo
     #me thang quan ebo 
     #mdfasdfjlsdjf
     #dhfalsdfs
     
+=======
+    #test name naem ane m
+>>>>>>> de6fa97161e985dcbee2e5a86fbac3a7b06d7c79
