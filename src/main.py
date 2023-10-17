@@ -6,3 +6,5 @@ class Main:
     def __init__(self):
        #Game HUD, UI, interactive buttons and stuf
        pass
+    def test(self):
+       pass
