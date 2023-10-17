@@ -17,4 +17,9 @@ class Pipe:
         # Implement the pipe's movement
         pass
     
+<<<<<<< HEAD
     #methangquangbeo
+=======
+    #me thang quan ebo 
+    
+>>>>>>> test
