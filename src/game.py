@@ -2,7 +2,7 @@
 
 #Attributes: screen, clock, score, bird, pipes, game_active
 #Methods: start(), run(), events(), draw(), update()
-
+#"test"
 # Create a Game class
 class Game:
     def __init__(self):
