@@ -1,60 +1,175 @@
 import pygame
-from pygame.locals import *
+import random
+import pygame.mixer
 
-# Initialize Pygame
+
 pygame.init()
+pygame.mixer.init()
 
-# Set up some constants
-WIDTH, HEIGHT = 640, 480
-SPEED = 5
 
-# Set up the display
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
+# Constants
+WIDTH, HEIGHT = 1200, 600
+BIRD_WIDTH, BIRD_HEIGHT = 50, 50
+BIRD_X = WIDTH // 4
+BIRD_Y = HEIGHT // 2 
+GRAVITY = 0.3
+JUMP = -5
+PIPE_WIDTH = 80
+PIPE_HEIGHT = random.randint(200, 400)
+PIPE_GAP = 200
+PIPE_X = WIDTH
+PIPE_SPEED = 4
 
-# Set up the player
-player = pygame.image.load("player.png")
-player_rect = player.get_rect()
-player_rect.topleft = (WIDTH / 2, HEIGHT - 50)
+# Colors
+WHITE = (255, 255, 255)
+BLUE = (0, 0, 255)
+RED = (255, 0, 0)
+GRAY = (128, 128, 128)
 
-# Set up the pipe
-pipe = pygame.image.load("pipe.png")
-pipe_rect = pipe.get_rect()
-pipe_rect.topleft = (WIDTH / 2, 0)
+# Create the screen 
+screen = pygame.display.set_mode((WIDTH, HEIGHT))             
+pygame.display.set_caption("Doki Doki Miracle Flappy Tori")
+icon = pygame.image.load('bird.png')
+pygame.display.set_icon(icon)
 
-# Set up the velocity
-velocity = [0, 0]
+# Bird variables
+bird_y = BIRD_Y
+bird_velocity = 0
 
-# Set up the interaction with pipe
-def check_collision(rect1, rect2):
-    if rect1.colliderect(rect2):
-        return True
-    return False
+# Pipes list
+pipes = [{"x": PIPE_X, "height": PIPE_HEIGHT}]
 
-# Main game loop
+# Score
+score = 0
+font = pygame.font.Font(None, 36)
+
+# Game over
+game_over_font = pygame.font.Font(None, 72)
+
+# Load the collision sound
+collision_sound = pygame.mixer.Sound('collision_sound.wav')
+
+# Load the background images
+background_image = pygame.image.load('background.png')  # Game over background
+backgame_image = pygame.image.load('backgame.png')      # Background during gameplay
+
+# Define the desired resolution of the picture (match your game window's resolution)
+background_width = WIDTH
+background_height = HEIGHT
+
+backgame_width = WIDTH
+backgame_height = HEIGHT
+
+# Resize the background image to the desired resolution
+def resize_background(image, width, height):
+    return pygame.transform.scale(image, (width, height))
+
+# Resize the background images
+background_image = resize_background(background_image, background_width, background_height)
+backgame_image = resize_background(backgame_image, backgame_width, backgame_height)
+
+# Function to play the collision sound
+def play_collision_sound():
+    collision_sound.play()
+
+# Function to restart the game
+def restart_game():
+    global bird_y, bird_velocity, pipes, score
+    bird_y = BIRD_Y
+    bird_velocity = 0
+    pipes = [{"x": PIPE_X, "height": PIPE_HEIGHT}]
+    score = 0
+
+# Game loop
+clock = pygame.time.Clock()
 running = True
+game_over = False
 while running:
-    # Event handling
     for event in pygame.event.get():
-        if event.type == QUIT:
+        if event.type == pygame.QUIT:
             running = False
-        if event.type == KEYDOWN:
-            if event.key == K_UP:
-                velocity[1] = -SPEED
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                if not game_over:
+                    bird_velocity = JUMP
+            if event.key == pygame.K_r:
+                if game_over:
+                    restart_game()
+                        
 
-    # Update the player position
-    player_rect.y += velocity[1]
+    clock.tick(60)
+    
+    # Draw the backgame_image always during gameplay
+    screen.blit(backgame_image, (0, 0))
+    
+    if not game_over:
+        # Move bird
+        bird_velocity += GRAVITY
+        bird_y += bird_velocity
 
-    # Check for collision with pipe
-    if check_collision(player_rect, pipe_rect):
-        print("Collision detected!")
+        # Create new pipes
+        if pipes[-1]["x"] < WIDTH - PIPE_GAP:
+            new_pipe_height = random.randint(200, 400)
+            pipes.append({"x": WIDTH, "height": new_pipe_height})
 
-    # Draw everything
-    screen.fill((0, 0, 0))
-    screen.blit(player, player_rect)
-    screen.blit(pipe, pipe_rect)
+        # Remove pipes that are off the screen
+        if pipes[0]["x"] + PIPE_WIDTH < 0:
+            pipes.pop(0)
+
+        # Move pipes
+        for pipe in pipes:
+            pipe["x"] -= PIPE_SPEED
+
+        # Check for collisions with pipes
+        for pipe in pipes:
+            if BIRD_X < pipe["x"] + PIPE_WIDTH and BIRD_X + BIRD_WIDTH > pipe["x"]:
+                if bird_y < pipe["height"] or bird_y + BIRD_HEIGHT > pipe["height"] + PIPE_GAP:
+                    game_over = True
+                    play_collision_sound()
+
+        # Check for collisions with upper or lower screen
+        if bird_y <= 0 or bird_y + BIRD_HEIGHT >= HEIGHT:
+            game_over = True
+            play_collision_sound()
+
+        # Increase score
+        for pipe in pipes:
+            if BIRD_X == pipe["x"] + PIPE_WIDTH and not game_over:
+                score += 1
+
+    # Clear the screen
+    screen.fill(WHITE)
+
+    # Draw pipes
+    for pipe in pipes:
+        pygame.draw.rect(screen, GRAY, (pipe["x"], 0, PIPE_WIDTH , pipe["height"]))
+        pygame.draw.rect(screen, GRAY, (pipe["x"], pipe["height"] + PIPE_GAP, PIPE_WIDTH, HEIGHT - pipe["height"] - PIPE_GAP))
+
+    # Draw bird
+    pygame.draw.rect(screen, RED, (BIRD_X, bird_y, BIRD_WIDTH, BIRD_HEIGHT))
+
+    # Background
+    screen.blit(backgame_image, (WIDTH, HEIGHT))
+
+    if game_over:
+        # Draw the background_image during game over
+        screen.blit(background_image, (0, 0))
+
+        # Game over text
+        game_over_text = game_over_font.render("You are stupid !!", True, (0, 0, 0))
+        screen.blit(game_over_text, (WIDTH // 2 - 150, HEIGHT // 2 - 36))
+        restart_text = font.render("Go to hell or press 'R' to restart", True, (0, 0, 0))
+        screen.blit(restart_text, (WIDTH // 2 - 130, HEIGHT // 2 + 36))
+
+    else:
+        # Display score
+        text = font.render(f"Score: {score}", True, (0, 0, 0))
+        screen.blit(text, (10, 10))
 
     # Update the display
-    pygame.display.flip()
+    pygame.display.update()
 
 # Quit Pygame
 pygame.quit()
+
+#this game was made with procedual programming)
