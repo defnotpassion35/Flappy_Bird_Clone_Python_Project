@@ -9,10 +9,11 @@
 #//teststst
 # Create a Pipe class
 class Pipe:
-    def __init__(self):
+    def __init__(self,x):
         # Initialize attributes for the pipe
         pass
 
     def move(self):
         # Implement the pipe's movement
         pass
+    
