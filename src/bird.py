@@ -6,3 +6,17 @@
 #-----------------Methods-----------------------
 #Possible methods: flap(), updateLocation()
 #need to work on this one again
+
+# Create a Bird class
+class Bird:
+    def __init__(self):
+        # Initialize attributes for the bird
+        pass
+
+    def jump(self):
+        # Implement the bird's jump action
+        pass
+
+    def move(self):
+        # Implement the bird's movement
+        pass

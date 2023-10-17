@@ -6,3 +6,13 @@
 #-----------------Methods-----------------------
 #Possible methods: draw(), update(), discard()
 #need to work on this one again
+
+# Create a Pipe class
+class Pipe:
+    def __init__(self):
+        # Initialize attributes for the pipe
+        pass
+
+    def move(self):
+        # Implement the pipe's movement
+        pass
