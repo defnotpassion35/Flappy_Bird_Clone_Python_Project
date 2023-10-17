@@ -17,5 +17,4 @@ class Pipe:
         # Implement the pipe's movement
         pass
     
-    #me thang quan ebo 
-    
+    #ebola is passion
