@@ -8,3 +8,6 @@ class Main:
        pass
     def test(self):
        pass
+    def test1 (self):
+        pass
+   
