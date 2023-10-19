@@ -17,5 +17,3 @@ class Pipe:
         # Implement the pipe's movement
         pass
     
-#test
-#test2
