@@ -1,30 +1,45 @@
-#this is where we call all class, mostly deaslling with ui and stuff
-# delete this line later. We mostly  put some for loop function here to call several classes many times
-
-# Create a Main class
 import pygame
+import bird
+#constant
+WIDTH = 1280
+HEIGHT = 720
+
 class Main:
-   def __init__(self):
-      #Game HUD, UI, interactive buttons and stuf
-      pass
    
    #intialize game 
    pygame.init()
-   
    #define the resolution
-   screen = pygame.display.set_mode((1280,720))
-   
+   screen = pygame.display.set_mode((WIDTH,HEIGHT))
    #Title
    pygame.display.set_caption("Flappy Bird Clone")
    #Icon
+     
+   
+   #create sprite group for bird + pipe
+   birds = pygame.sprite.Group()   
+   #creat bird object + add to sprite groups
+   initialX = WIDTH / 8
+   initialY = HEIGHT / 2
+   bird1 = bird.FlappyBird(initialX,initialY)
+   birds.add(bird1)
+
    
    #Game Loop
    gameOn = True
    
    while gameOn:
       for event in pygame.event.get():
-         if event.type() == pygame.QUIT:
+         if event.type == pygame.QUIT:
             gameOn = False
+         if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+               bird1.flap()               
+               
+         if event.type == pygame.KEYUP:
+            pass
+      screen.fill((0,0,0))
+      bird1.update(HEIGHT)
+      screen.blit(bird1.img, bird1.rect)#(bird1.x, bird1.y))
       #update display
       pygame.display.update()
 
