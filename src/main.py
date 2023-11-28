@@ -1,8 +1,8 @@
 import pygame
 import bird
 #constant
-WIDTH = 1280
-HEIGHT = 720
+WIDTH = 1920
+HEIGHT = 1080
 
 class Main:
    
@@ -31,12 +31,14 @@ class Main:
       for event in pygame.event.get():
          if event.type == pygame.QUIT:
             gameOn = False
+            
          if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                bird1.flap()               
                
          if event.type == pygame.KEYUP:
             pass
+      
       screen.fill((0,0,0))
       bird1.update(HEIGHT)
       screen.blit(bird1.img, bird1.rect)#(bird1.x, bird1.y))

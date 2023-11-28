@@ -22,25 +22,4 @@ class Pipe:
         pass
     def draw(self):
         pass
-    
-#Testing genvironment
-#intialize game 
-pygame.init()
-   
-   #define the resolution
-screen = pygame.display.set_mode((1280,720))
-   
-   #Title
-pygame.display.set_caption("Flappy Bird Clone")
-   #Icon
-   
-   #Game Loop
-gameOn = True
-   
-while gameOn:
-    for event in pygame.event.get():
-        if event.type() == pygame.QUIT:
-            gameOn = False
-      #update display
-    pygame.display.update()
 
