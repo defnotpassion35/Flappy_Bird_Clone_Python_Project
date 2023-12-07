@@ -31,7 +31,7 @@ birds.add(bird)
 
 # Set up pipes
 pipe_gap = 300
-pipe_spawn_frequency = 60  # in frames
+pipe_spawn_frequency = 80  # in frames
 pipe_spawn_timer = 0
 
 # Game loop
