@@ -47,7 +47,7 @@ class FlappyBird(pygame.sprite.Sprite):
         # also limit to not allow bitd move out of the screen (vertically)
         if self.rect.top < 0:
             self.rect.top = 0
-            #we could possible kill the bird or just not allow them to not go pass the border
+            #we could possibly kill the bird or just not allow them to not go pass the border
                 #self.Y_velocity = 0
                 #self.gravity =  0
             # we chosse the second one here
