@@ -10,7 +10,7 @@ class FlappyBird(pygame.sprite.Sprite):
     img_string = None
         
     #CONSTRUCOTRS
-    def __init__(self, x, y): #, img_string
+    def __init__(self, x, y, imagePath): #, img_string
         # Initialize attributes for the bird
         pygame.sprite.Sprite.__init__(self)
         
@@ -22,13 +22,13 @@ class FlappyBird(pygame.sprite.Sprite):
         
         #Bird movement attribute
         self.Y_velocity = -200
-        self.gravity = 1
+        self.gravity = 4
         
         #self.sound[collide]
         
         #adding image
         cwd = os.path.dirname(__file__)
-        self.image = pygame.image.load(os.path.join(cwd, "img", "plane.png"))
+        self.image = pygame.image.load(os.path.join(cwd, "img", imagePath))
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
 

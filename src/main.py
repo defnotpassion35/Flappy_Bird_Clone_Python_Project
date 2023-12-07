@@ -26,7 +26,7 @@ birds = pygame.sprite.Group()
 pipes = pygame.sprite.Group()
 
 # Set up the bird
-bird = FlappyBird(screen_width // 4, screen_height // 2)  # Initial position
+bird = FlappyBird(screen_width // 4, screen_height // 2, "plane.png")  # Initial position
 birds.add(bird)
 
 # Set up pipes
