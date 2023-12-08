@@ -4,6 +4,7 @@ import random
 from bird import FlappyBird 
 from pipe import Pipe
 
+<<<<<<< Updated upstream
 # Initialize Pygame
 pygame.init()
 
@@ -88,3 +89,16 @@ while True:
 
     # Cap the frame rate
     clock.tick(60)  # Adjust as needed
+=======
+# Create a Main class
+class Main:
+    def __init__(self):
+       #Game HUD, UI, interactive buttons and stuf
+       pass
+    def test(self):
+       pass
+    def test1 (self):
+        pass
+
+     
+>>>>>>> Stashed changes
