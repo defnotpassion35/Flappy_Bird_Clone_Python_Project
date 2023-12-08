@@ -1,20 +1,31 @@
-#code bird class, include many attributes and methods
-#--------------------Attributes or properties----------------------------------
-#possible function attributes: x_position, top and bottom pipe,
-# possible instace attribute: heigth, width 
+import pygame
+import random
 
-#-----------------Methods-----------------------
-#Possible methods: draw(), update(), discard()
-#need to work on this one again
-#//teststst
-# Create a Pipe class
-class Pipe:
-    def __init__(self,x):
-        # Initialize attributes for the pipe
-        pass
+screen_width = 1920
+screen_height = 1080
 
-    def move(self):
-        # Implement the pipe's movement
-        pass
+class Pipe(pygame.sprite.Sprite):
+    def __init__(self, x, height, gap):
+        pygame.sprite.Sprite.__init__(self)
+        self.x = x
+        self.height = height
+        self.gap = gap
+        self.width = 80
+        self.rect = pygame.Rect(self.x, 0, self.width, self.height)
+        self.lower_rect = pygame.Rect(self.x, int(self.height + self.gap), self.width, int(screen_height - self.height - self.gap))
+
+    def update(self, speed):
+        # Move the pipe to the left
+        self.x -= speed
+        self.rect.x = self.x
+
+    def offscreen(self):
+        # Check if the pipe is offscreen
+        return self.x + self.width < 0
+
+    def draw(self, screen, pipe_color):
+    # Draw the upper part of the pipe
+        pygame.draw.rect(screen, pipe_color, (self.x, 0, self.width, int(self.height)))
     
-#dfalkdsjflkdsajflkdsajk
+    # Draw the lower part of the pipe
+        pygame.draw.rect(screen, pipe_color, (self.x, int(self.height + self.gap), self.width, int(screen_height - self.height - self.gap)))
