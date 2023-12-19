@@ -1,6 +1,6 @@
 import pygame 
 import button
-from game_test import Game
+from game import Game
 
 #######
 class Menu():

@@ -52,13 +52,11 @@ class Game:
             # Update bird
             if not self.game_over:
                 self.bird.update(self.screen_height)
+                
                 # Update the pipes
                 speed = 5  # Set a constant speed
                 self.pipes.update(speed)
 
-            # speed = 5  # Set a constant speed
-            # self.pipes.update(speed)  
-             
             # Spawn pipes
             self.pipe_spawn_timer += 1
             if self.pipe_spawn_timer == self.pipe_spawn_frequency:
