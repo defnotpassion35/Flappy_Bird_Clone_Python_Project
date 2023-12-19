@@ -3,21 +3,22 @@ import sys
 import random
 from bird import FlappyBird 
 from pipe import Pipe
-from game_over import GameOver
 
 class Game:
+    # Initialize Pygame
     def __init__(self, screen_width, screen_height):
         pygame.init()
 
         # Set up the screen
-        self.screen_width = screen_width
-        self.screen_height = screen_height
+        self.screen_width  = 1920
+        self.screen_height = 1080
         self.screen = pygame.display.set_mode((screen_width, screen_height))
         pygame.display.set_caption("Flappy Bird")
 
         # Set up colors
         self.white = (255, 255, 255)
         self.GRAY = (128, 128, 128)
+
 
         # Set up clock
         self.clock = pygame.time.Clock()
@@ -35,30 +36,23 @@ class Game:
         self.pipe_spawn_frequency = 80  # in frames
         self.pipe_spawn_timer = 0
 
-        # Set up game_over screen
-        self.game_over = False
-        self.game_over_screen = GameOver(self.screen, self.screen_width, self.screen_height)
-
-    def run(self):
         # Game loop
-        while not self.game_over:
+        while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    self.game_over = True
+                    pygame.quit()
+                    sys.exit()
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
                         self.bird.flap()
 
             # Update bird
-            if not self.game_over:
-                self.bird.update(self.screen_height)
-                # Update the pipes
-                speed = 5  # Set a constant speed
-                self.pipes.update(speed)
-
-            # speed = 5  # Set a constant speed
-            # self.pipes.update(speed)  
-             
+            self.bird.update(screen_height)
+            
+            # Update the pipes
+            speed = 5  # Set a constant speed
+            self.pipes.update(speed)  
+            
             # Spawn pipes
             self.pipe_spawn_timer += 1
             if self.pipe_spawn_timer == self.pipe_spawn_frequency:
@@ -66,6 +60,7 @@ class Game:
                 new_pipe = Pipe(self.screen_width, pipe_height, self.pipe_gap)
                 self.pipes.add(new_pipe)
                 self.pipe_spawn_timer = 0
+
 
             # Remove offscreen pipes
             for pipe in self.pipes:
@@ -76,9 +71,10 @@ class Game:
             for pipe in self.pipes:
                 if self.bird.rect.x < pipe.x + pipe.width and self.bird.rect.x + self.bird.rect.width > pipe.x:
                     if self.bird.rect.y < pipe.height or self.bird.rect.y + self.bird.rect.height > pipe.height + pipe.gap:
-                        self.game_over = True
                         print("Ouch! You hit a pipe!")
-               
+                        pygame.quit()
+                        sys.exit() 
+
             # Draw everything
             self.screen.fill(self.white)
 
@@ -91,11 +87,9 @@ class Game:
 
             pygame.display.flip()
 
+
             # Cap the frame rate
             self.clock.tick(60)  # Adjust as needed
-            
-        self.game_over_screen.game_over_screen()
-
 if __name__ == "__main__":
-    game = Game(1920, 1080)
+    game =  Game(1920, 1080)
     game.run()
