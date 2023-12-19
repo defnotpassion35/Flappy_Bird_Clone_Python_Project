@@ -1,5 +1,6 @@
 import pygame 
 import button
+from game import Game
 
 
 class Menu():
@@ -7,6 +8,7 @@ class Menu():
         self.screen = screen
         self.game_paused = False
         self.menu_state = "main_menu"
+        self.game_state = "ga"
         pygame.font.init() #initialize font module
         self.font = pygame.font.SysFont("arial", 40)
         self.TEXT_COL = (255, 255, 255)
@@ -23,7 +25,7 @@ class Menu():
         self.option_button = button.Button(860, 600, option_img, 1)
         self.video_button = button.Button(304, 220, option_img, 1)
         self.backmenu_button = button.Button(304, 680, backmenu_img, 1)
-
+ 
     def draw_text(self, text, x, y):
         img = self.font.render(text, True, self.TEXT_COL)
         self.screen.blit(img, (x, y))
@@ -44,27 +46,29 @@ class Menu():
                 self.screen.fill((202, 228, 241))
 
         #Check if game is paused
-                if self.game_paused == True: 
+                if self.game_paused:
                     #check menu_state
                     if self.menu_state == "main_menu":
                         #draw pause screen buttons
-                        if self.start_button.draw(screen):
+                        if self.start_button.draw(self.screen):
                             self.game_paused = False
-                        if self.option_button.draw(screen):
+                            game = Game(1920, 1080) #Create a Game instance
+                            game.run()
+                        if self.option_button.draw(self.screen):
                             self.menu_state = "options"
-                        if self.end_button.draw(screen):
+                        if self.end_button.draw(self.screen):
                             run = False
                 #check if the option menu is open
                 if self.menu_state == "options":
                 #draw different option buttons in the screen
-                    if self.video_button.draw(screen):
+                    if self.video_button.draw(self.screen):
                         print("Video seting button is clicked")
-                    if self.backmenu_button.draw(screen):
+                    if self.backmenu_button.draw(self.screen):
                         self.menu_state = "main_menu"  
                 #check if the selection screen is open
                 if self.menu_state == "selection":
                     #draw other buttons for selection screen
-                    if self.backmenu_button.draw(screen):
+                    if self.backmenu_button.draw(self.screen):
                         self.menu_state = "main_menu"
                 else: 
                     self.draw_text("Press Space to Enter", 463, 250)
