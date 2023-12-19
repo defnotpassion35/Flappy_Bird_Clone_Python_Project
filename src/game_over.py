@@ -11,7 +11,7 @@ class GameOver():
         print(self.screen_width, self.screen_height)
         font = pygame.font.Font(None, 74)
         text = font.render("Game Over", True, (255, 0, 0))
-        text_rect = text.get_rect(center=(self.screen_width // 2, self.screen_height // 2))
+        text_rect = text.get_rect(center=(self.screen_width // 2, self.screen_height // 2)) #Choose a screen dimension
         self.screen.blit(text, text_rect)
         pygame.display.flip()
         pygame.time.wait(2000)  # Display the "Game Over" screen for 2 seconds
