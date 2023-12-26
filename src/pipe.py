@@ -13,7 +13,7 @@ class Pipe(pygame.sprite.Sprite):
         self.width = 80
         self.rect = pygame.Rect(self.x, 0, self.width, self.height)
         self.lower_rect = pygame.Rect(self.x, int(self.height + self.gap), self.width, int(screen_height - self.height - self.gap))
-
+        pygame.image.load
     def update(self, speed):
         # Move the pipe to the left
         self.x -= speed

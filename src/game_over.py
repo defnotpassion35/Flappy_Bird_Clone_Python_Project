@@ -1,65 +1,73 @@
 import pygame
 import sys
+from button import Button 
+from game import Game
 
-class GameOver():
+class GameOver:
     def __init__(self, screen, screen_width, screen_height):
         self.screen = screen
         self.screen_width = screen_width
         self.screen_height = screen_height
+        self.game_paused = False  # Initialize game_paused attribute
+        self.main_menu = "main_menu"
+        self.game_instance = None
+        # Load button images
+        start_img = pygame.image.load('src/img/PHstart_button.png').convert_alpha()
+        exit_img = pygame.image.load('src/img/PHexit_button.png').convert_alpha()
+        backmenu_img = pygame.image.load('src/img/back_menu.png').convert_alpha()
         
-    def game_over_screen(self):
+        # Create button instances using your custom Button class
+        self.start_button = Button(50, 50, start_img, 1)  # Adjust coordinates
+        self.end_button = Button(50, 150, exit_img, 1)  # Adjust coordinates
+        self.backmenu_button = Button(304, 680, backmenu_img, 1)
+    def game_over_screen(self, x_position, y_position):
         print(self.screen_width, self.screen_height)
         font = pygame.font.Font(None, 74)
         text = font.render("Game Over", True, (255, 0, 0))
-        text_rect = text.get_rect(center=(self.screen_width // 2, self.screen_height // 2)) #Choose a screen dimension
+
+        x_position = 100
+        y_position = 200
+        text_rect = text.get_rect(topleft=(x_position, y_position))  # define the dimension
         self.screen.blit(text, text_rect)
-        pygame.display.flip()
-        pygame.time.wait(2000)  # Display the "Game Over" screen for 2 seconds
-        pygame.quit()
-        sys.exit()
- 
 
+        # Draw buttons and handle events
+        in_game_over_screen = True
 
-    # def draw_game_over_text(self, text, x, y):
-    #     img = self.font.render(text, True, self.text_col)
-    #     self.screen.blit(img, (x,y))
+        while in_game_over_screen:
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        in_game_over_screen = False  # Break the loop on spacebar press
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if self.start_button.draw(self.screen):
+                        print("Start button clicked")  # Add your start button logic here
+                    elif self.end_button.draw(self.screen):
+                        pygame.quit()
+                        sys.exit()
+            #Check for Quit Button
+            if self.game_paused:
+                    #check menu_state
+                    if self.menu_state == "main_menu":
+                        #draw pause screen buttons
+                        if self.start_button.draw(self.screen):
+                            self.game_paused = False
+                            game = Game(1920, 1080) #Create a Game instance
+                            game.run()
+                        if self.end_button.draw(self.screen):
+                            run = False
+            # Draw buttons outside the event loop
+            self.start_button.draw(self.screen)
+            self.end_button.draw(self.screen)
 
-    # def handle_events(self):
-    #     for event in pygame.event.get():
-    #         if event.type == pygame.KEYDOWN:
-    #             if event.key == pygame.key_r:
-    #                 return "restart"
-    #         if event.type == pygame.quit:
-    #             pygame.quit()
-    #             quit()
-    # def run(self):
-    #     run = True
-    #     while run:
-    #         self.screen.fill(202, 228, 241)
+            pygame.display.flip()
 
-    #        #check if the option menu is open
-    #         if self.menu_state == "options":
-    #             #draw different option buttons in the screen
-    #             if self.video_button.draw(self.screen):
-    #                     print("Video seting button is clicked")
-    #             if self.backmenu_button.draw(self.screen):
-    #                     self.menu_state = "main_menu"  
-    #             #check if the selection screen is open
-    #         if self.menu_state == "selection":
-    #                 #draw other buttons for selection screen
-    #             if self.backmenu_button.draw(self.screen):
-    #                     self.menu_state = "main_menu"
-    #     else:
-
-    #         self.draw_game_over_text()
-    #         pygame.display.update()
-
-    #         for event in pygame.event.get():
-    #             if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
-    #                 return "restart"
-    #             if event.type == pygame.QUIT:
-    #                 pygame.quit()
-    #                 quit()
-        
-    
- 
+            
+    #Loop
+    def handle_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_q:
+                    self.game_paused = True
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
