@@ -26,6 +26,10 @@ class Game:
         # Create sprite groups
         self.birds = pygame.sprite.Group()
         self.pipes = pygame.sprite.Group()
+        
+        # Set up Score
+        self.score = 0
+        self.font = pygame.font.Font(None, 36)
 
         # Set up the bird
         self.bird = FlappyBird(screen_width // 4, screen_height // 2, "plane.png")  # Initial position
@@ -92,13 +96,24 @@ class Game:
 
             # Check for collisions with pipes
             for pipe in self.pipes:
-                if self.bird.rect.x < pipe.x + pipe.width and self.bird.rect.x + self.bird.rect.width > pipe.x:
+                if self.bird.rect.x < pipe.x + pipe.width and self.bird.rect.x + self.bird.rect.width > pipe.x:   
                     if self.bird.rect.y < pipe.height or self.bird.rect.y + self.bird.rect.height > pipe.height + pipe.gap:
                         self.game_over = True
                         print("Ouch! You hit a pipe!")
+<<<<<<< HEAD
                
             # Draw BG
             self.BackGround()
+=======
+            # Increase score
+            for pipe in self.pipes :
+                if self.bird.x == pipe.x  + 80:  #and not game_over:
+                    self.score += 1
+                    print(self.score) 
+
+            # Draw everything
+            self.screen.fill(self.white)
+>>>>>>> eb592ae5df2676339f932b74ebc2910159e986b9
 
             # Draw pipes first
             for pipe in self.pipes:
@@ -107,8 +122,13 @@ class Game:
             # Draw bird last
             self.bird.draw(self.screen)
 
+            # Display score
+            if(self.game_over == False):
+                text = self.font.render(f"Score: {self.score}", True, (100, 0, 0))
+                self.screen.blit(text, (200, 80))
+            
             pygame.display.flip()
-
+            
             # Cap the frame rate
             self.clock.tick(60)  # Adjust as needed
             
