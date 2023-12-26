@@ -98,8 +98,8 @@ class Game:
 
             # Display score
             if(self.game_over == False):
-                text = self.font.render(f"Score: {self.score}", True, (100, 0, 0))
-                self.screen.blit(text, (200, 80))
+                text = self.font.render(f"Score: {self.score}", True, (0, 0, 0))
+                self.screen.blit(text, (200, 70))
             
             pygame.display.flip()
             
