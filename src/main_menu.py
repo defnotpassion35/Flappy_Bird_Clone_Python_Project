@@ -13,7 +13,7 @@ class Menu():
         self.game_state = "game"
         pygame.font.init() #initialize font module
         self.font = pygame.font.SysFont("arial", 40)
-        self.TEXT_COL = (255, 255, 255)
+        self.TEXT_COL = (0, 0, 0)
 
         #load button images
         start_img = pygame.image.load('src/img/PHstart_button.png').convert_alpha()
@@ -89,7 +89,7 @@ class Menu():
                     if self.backmenu_button.draw(self.screen):
                         self.menu_state = "main_menu"
                 else: 
-                    self.draw_text("Press Space to Enter", 463, 250)
+                    self.draw_text("Press Space to Play", 800, 540) #Welcome Text Dimension
 
                 self.handle_events()
                 pygame.display.update()

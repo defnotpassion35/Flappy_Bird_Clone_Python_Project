@@ -146,17 +146,18 @@ class GameOver:
         backmenu_img = pygame.image.load('src/img/back_menu.png').convert_alpha()
 
         # Create button instances using your custom Button class
-        self.start_button = Button(50, 50, start_img, 1)  # Adjust coordinates
-        self.end_button = Button(50, 150, exit_img, 1)  # Adjust coordinates
-        self.backmenu_button = Button(304, 680, backmenu_img, 1)
+        self.start_button = Button(860, 450, start_img, 1)  # Adjust coordinates
+        self.end_button = Button(860, 560, exit_img, 1)  # Adjust coordinates
+        self.backmenu_button = Button(860, 680, backmenu_img, 1)
 
     def game_over_screen(self, x_position, y_position):
         print(self.screen_width, self.screen_height)
         font = pygame.font.Font(None, 74)
         text = font.render("Game Over", True, (255, 0, 0))
-
-        x_position = 100
-        y_position = 200
+        
+        #X as Width and Y as Height for the Game Over Text Dimension
+        x_position = 840    
+        y_position = 450
         text_rect = text.get_rect(topleft=(x_position, y_position))  # define the dimension
         self.screen.blit(text, text_rect)
 
