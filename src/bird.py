@@ -21,7 +21,7 @@ class FlappyBird(pygame.sprite.Sprite):
         #self.img_string = img_string
         
         #Bird movement attribute
-        self.Y_velocity = -200
+        self.Y_velocity = -110
         self.gravity = 4
         
         #self.sound[collide]
