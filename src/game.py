@@ -35,8 +35,8 @@ class Game:
         self.birds.add(self.bird)
 
         # Set up pipes
-        self.pipe_gap = 300
-        self.pipe_spawn_frequency = 80  # in frames
+        self.pipe_gap = 350
+        self.pipe_spawn_frequency = 60  # in frames
         self.pipe_spawn_timer = 0
 
         # Set up game_over screen
@@ -77,7 +77,7 @@ class Game:
             # Check for collisions with pipes
             for pipe in self.pipes:
                 if self.bird.rect.x < pipe.x + pipe.width and self.bird.rect.x + self.bird.rect.width > pipe.x:   
-                    if self.bird.rect.y < pipe.height or self.bird.rect.y + self.bird.rect.height > pipe.height + pipe.gap:
+                    if self.bird.rect.y < pipe.height or self.bird.rect.y + self.bird.rect.height > pipe.height + pipe.gap: 
                         self.game_over = True
                         print("Ouch! You hit a pipe!")
             # Increase score
