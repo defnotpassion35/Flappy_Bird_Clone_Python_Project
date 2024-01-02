@@ -1,7 +1,7 @@
 import pygame
 import sys
 import random
-from bird import FlappyBird 
+from bird_test import FlappyBird 
 from pipe import Pipe
 from game_over import GameOver
 import math
@@ -32,12 +32,12 @@ class Game:
         self.font = pygame.font.Font(None, 36)
 
         # Set up the bird
-        self.bird = FlappyBird(screen_width // 4, screen_height // 2, "plane.png")  # Initial position
+        self.bird = FlappyBird(screen_width // 4, screen_height // 2, "bird_1.png")  # Initial position
         self.birds.add(self.bird)
 
         # Set up pipes
-        self.pipe_gap = 350
-        self.pipe_spawn_frequency = 60  # in frames
+        self.pipe_gap = 300
+        self.pipe_spawn_frequency = 80  # in frames
         self.pipe_spawn_timer = 0
 
         # Set up game_over screen
@@ -97,7 +97,7 @@ class Game:
             # Check for collisions with pipes
             for pipe in self.pipes:
                 if self.bird.rect.x < pipe.x + pipe.width and self.bird.rect.x + self.bird.rect.width > pipe.x:   
-                    if self.bird.rect.y < pipe.height or self.bird.rect.y + self.bird.rect.height > pipe.height + pipe.gap: 
+                    if self.bird.rect.y < pipe.height or self.bird.rect.y + self.bird.rect.height > pipe.height + pipe.gap:
                         self.game_over = True
                         print("Ouch! You hit a pipe!")
                
@@ -118,11 +118,11 @@ class Game:
 
             # Draw bird last
             self.bird.draw(self.screen)
-    
+
             # Display score
             if(self.game_over == False):
-                text = self.font.render(f"Score: {self.score}", True, (0, 0, 0))
-                self.screen.blit(text, (200, 70))
+                text = self.font.render(f"Score: {self.score}", True, (100, 0, 0))
+                self.screen.blit(text, (200, 80))
             
             pygame.display.flip()
             
