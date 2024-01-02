@@ -74,8 +74,8 @@ class FlappyBird(pygame.sprite.Sprite):
             self.rect = self.image.get_rect(center=self.rect.center)
         
 class Bird1(FlappyBird):
-    def __init__(self, x, y, imagePath):
-        super().__init__(x, y, imagePath)
+    def __init__(self, x, y, sprite_images_paths, num_frames, scale_factor=3.5):
+        super().__init__(x, y, sprite_images_paths, num_frames, scale_factor)
         #adding image
         cwd = os.path.dirname(__file__)
         self.sprite_images = pygame.image.load(os.path.join(cwd, "img", "Bird_1.png"))
@@ -88,8 +88,9 @@ class Bird1(FlappyBird):
         
         
 class Bird2(FlappyBird):
-    def __init__(self, x, y, imagePath):
-        super().__init__(x, y, imagePath)
+    def __init__(self, x, y, sprite_images_paths, num_frames, scale_factor=3.5):
+        super().__init__(x, y, sprite_images_paths, num_frames, scale_factor)
+
         #adding image
         cwd = os.path.dirname(__file__)
         self.image = pygame.image.load(os.path.join(cwd, "img", "Bird_2.png")) #, imagePath))
@@ -100,8 +101,9 @@ class Bird2(FlappyBird):
         self.rect.y += 1.5 * self.Y_velocity
         
 class Bird3(FlappyBird):
-    def __init__(self, x, y, imagePath):
-        super().__init__(x, y, imagePath)
+    def __init__(self, x, y, sprite_images_paths, num_frames, scale_factor=3.5):
+        super().__init__(x, y, sprite_images_paths, num_frames, scale_factor)
+
         #adding image
         cwd = os.path.dirname(__file__)
         self.image = pygame.image.load(os.path.join(cwd, "img", "Bird_3.png")) #, imagePath))
