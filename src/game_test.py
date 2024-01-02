@@ -2,6 +2,9 @@ import pygame
 import sys
 import random
 from bird import FlappyBird 
+from bird import Bird1
+from bird import Bird2
+from bird import Bird3
 from pipe import Pipe
 import math
 from button import Button
@@ -17,7 +20,6 @@ class Game:
         pygame.display.set_caption("Flappy Bird")
 
         # Set up colors 
-
         self.GRAY = (128, 128, 128)
 
         # Set up clock
@@ -28,7 +30,7 @@ class Game:
         self.pipes = pygame.sprite.Group()
 
         # Set up the bird
-        self.bird = FlappyBird(screen_width // 4, screen_height // 2, "plane.png")  # Initial position
+        self.bird = Bird2(screen_width // 4, screen_height // 2, "plane.png")  # Initial position
         self.birds.add(self.bird)
 
         # Set up pipes
