@@ -1,14 +1,15 @@
 import pygame
 
 class Button():
-    def __init__(self, x, y, image, scale):
+    def __init__(self, x, y, image, scale, selected_frame_index=0):
         width = image.get_width()
         height = image.get_height()
         self.image = pygame.transform.scale(image, (int(width * scale), int(height * scale)))
         self.rect = self.image.get_rect()
         self.rect.topleft = (x,y)
         self.clicked = False
-
+        self.selected_frame_index = selected_frame_index
+        self.image = self.image.subsurface((selected_frame_index * width, 0, width, height))
     #Check for mouse position
     def draw(self, surface):
         action = False

@@ -1,7 +1,10 @@
 import pygame
 import sys
 import random
-from bird import FlappyBird 
+from bird import FlappyBird
+from bird import Bird1
+from bird import Bird2
+from bird import Bird3 
 from pipe import Pipe
 from game_over import GameOver
 import math
@@ -32,7 +35,7 @@ class Game:
         self.font = pygame.font.Font(None, 36)
 
         # Set up the bird
-        self.bird = FlappyBird(screen_width // 4, screen_height // 2, "plane.png")  # Initial position
+        self.bird = Bird1(screen_width // 4, screen_height // 2, "bird_1.png")  # Initial position
         self.birds.add(self.bird)
 
         # Set up pipes
@@ -118,11 +121,11 @@ class Game:
 
             # Draw bird last
             self.bird.draw(self.screen)
-    
+
             # Display score
             if(self.game_over == False):
-                text = self.font.render(f"Score: {self.score}", True, (0, 0, 0))
-                self.screen.blit(text, (200, 70))
+                text = self.font.render(f"Score: {self.score}", True, (100, 0, 0))
+                self.screen.blit(text, (200, 80))
             
             pygame.display.flip()
             
