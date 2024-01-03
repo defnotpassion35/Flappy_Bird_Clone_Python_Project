@@ -1,10 +1,7 @@
 import pygame
 import sys
 import random
-from bird import FlappyBird
-from bird import Bird1
-from bird import Bird2
-from bird import Bird3 
+from bird import *
 from pipe import Pipe
 import math
 from button import Button
@@ -31,7 +28,7 @@ class Game:
         self.pipes = pygame.sprite.Group()
 
         # Set up the bird
-        self.bird = Bird2(screen_width // 4, screen_height // 2, "Bird_1.png", num_frames=4)  # Initial sprite position
+        self.bird = Bird2(screen_width // 4, screen_height // 2, num_frames=4)  # Initial sprite position
         self.birds.add(self.bird)
 
         # Set up pipes
