@@ -1,27 +1,28 @@
 import pygame
+import button
+import math
 
 class Button():
     def __init__(self, x, y, image, scale, selected_frame_index=0):
         width = image.get_width()
         height = image.get_height()
         self.image = pygame.transform.scale(image, (int(width * scale), int(height * scale)))
+        self.original_image = self.image.copy()
         self.rect = self.image.get_rect()
-        self.rect.topleft = (x,y)
+        self.rect.topleft = (x, y)
         self.clicked = False
         self.selected_frame_index = selected_frame_index
-        self.image = self.image.subsurface((selected_frame_index * width, 0, width, height))
-    #Check for mouse position
+
+        self.outline_color = (255, 0, 0) #Select an outline color
+        self.outline_width = 5 #Choose how thicc the hitbox will be
+
     def draw(self, surface):
         action = False
-        #draw button on screen
         pos = pygame.mouse.get_pos()
-        #print(pos)
 
-       #check mouseover and clicked condition
         if self.rect.collidepoint(pos):
-            if pygame.mouse.get_pressed()[0] == 1 and self.clicked == False:
+            if pygame.mouse.get_pressed()[0] == 1 and not self.clicked:
                 self.clicked = True
-                print('Is clicked')
                 action = True
 
         if pygame.mouse.get_pressed()[0] == 0:
@@ -29,4 +30,9 @@ class Button():
 
         surface.blit(self.image, (self.rect.x, self.rect.y))
 
+        if self.clicked:
+            # Draw the outline when the button is selected
+            pygame.draw.rect(surface, self.outline_color, self.rect, self.outline_width)
+
         return action
+

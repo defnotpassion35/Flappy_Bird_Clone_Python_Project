@@ -1,6 +1,6 @@
 import pygame 
 import button
-from game_test import Game
+from game import Game
 import math
 
 class Menu():
@@ -17,9 +17,9 @@ class Menu():
         self.TEXT_COL = (0, 0, 0)
         #Insert Character Variable
         self.character_selection = [
-            button.Button(400, 600, pygame.image.load('src/img/Bird_1.png').convert_alpha(), 1, selected_frame_index=0),
-            button.Button(400, 800, pygame.image.load('src/img/Bird_2.png').convert_alpha(), 1),
-            button.Button(400, 1000, pygame.image.load('src/img/Bird_3.png').convert_alpha(), 1),
+            button.Button(400, 600, pygame.image.load('src/img/Bird_1.png').convert_alpha(), 1, selected_frame_index=1),
+            button.Button(600, 600, pygame.image.load('src/img/Bird_2.png').convert_alpha(), 1),
+            button.Button(800, 600, pygame.image.load('src/img/Bird_3.png').convert_alpha(), 1),
         ]
 
         #load button images
@@ -87,7 +87,7 @@ class Menu():
                 #draw different option buttons in the screen
                     for char_button in self.character_selection:
                         if char_button.draw(self.screen):
-
+    
                             self.selected_character = char_button
                             print(f"selected character: {self.selected_character}")
 
@@ -115,8 +115,8 @@ if __name__== "__main__":
 
     character_selection_buttons = [
             button.Button(400, 600, pygame.image.load('src/img/Bird_1.png').convert_alpha(), 1),
-            button.Button(400, 800, pygame.image.load('src/img/Bird_2.png').convert_alpha(), 1),
-            button.Button(400, 1000, pygame.image.load('src/img/Bird_3.png').convert_alpha(), 1),
+            button.Button(600, 600, pygame.image.load('src/img/Bird_2.png').convert_alpha(), 1),
+            button.Button(800, 600, pygame.image.load('src/img/Bird_3.png').convert_alpha(), 1),
         ]
 
     menu = Menu(screen, screen_height, screen_height)
