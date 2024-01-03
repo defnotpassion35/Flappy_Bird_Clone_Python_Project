@@ -10,7 +10,7 @@ class FlappyBird(pygame.sprite.Sprite):
     img_string = None
         
     #CONSTRUCOTRS
-    def __init__(self, x, y, sprite_images_paths, num_frames, scale_factor=3.5): #, img_string
+    def __init__(self, x, y, num_frames, scale_factor=3.5): #, img_string
         # Initialize attributes for the bird
         pygame.sprite.Sprite.__init__(self)
         
@@ -30,7 +30,7 @@ class FlappyBird(pygame.sprite.Sprite):
         
         #adding image
         cwd = os.path.dirname(__file__)
-        self.sprite_images = pygame.image.load(os.path.join(cwd, "img", sprite_images_paths))
+        self.sprite_images = pygame.image.load(os.path.join(cwd, "img", "Bird_1.png"))
         self.frame_width = self.sprite_images.get_width() // num_frames
         self.frame_height = self.sprite_images.get_height()
         self.frames = [pygame.transform.scale(
@@ -44,13 +44,11 @@ class FlappyBird(pygame.sprite.Sprite):
 
     def flap(self):
         # Implement the bird's jump action
-        print("the bird is flapping")
-        self.rect.y += self.Y_velocity
+        pass
 
     def update(self, screen_height):
-        # Implement the bird's movement (gravity + horizontal)
+        # Implement the bird's movement (gravity)
         self.rect.y += self.gravity
-        #print("current y position: self.rect.y: " + str(self.rect.y))
 
         # Limit to not allow bird to move out of the screen (vertically)
         if self.rect.top < 0:
@@ -74,12 +72,19 @@ class FlappyBird(pygame.sprite.Sprite):
             self.rect = self.image.get_rect(center=self.rect.center)
         
 class Bird1(FlappyBird):
-    def __init__(self, x, y, sprite_images_paths, num_frames, scale_factor=3.5):
-        super().__init__(x, y, sprite_images_paths, num_frames, scale_factor)
+    def __init__(self, x, y, num_frames, scale_factor=3.5):
+        super().__init__(x, y, num_frames, scale_factor)
         #adding image
         cwd = os.path.dirname(__file__)
         self.sprite_images = pygame.image.load(os.path.join(cwd, "img", "Bird_1.png"))
-
+        self.frame_width = self.sprite_images.get_width() // num_frames
+        self.frame_height = self.sprite_images.get_height()
+        self.frames = [pygame.transform.scale(
+            self.sprite_images.subsurface((i * self.frame_width, 0, self.frame_width, self.frame_height)),
+            (int(self.frame_width * scale_factor), int(self.frame_height * scale_factor)))
+            for i in range(num_frames)] #Scale and add frame to the sprite
+        
+        self.image = self.frames[self.index]
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
     def flap(self):
@@ -88,28 +93,44 @@ class Bird1(FlappyBird):
         
         
 class Bird2(FlappyBird):
-    def __init__(self, x, y, sprite_images_paths, num_frames, scale_factor=3.5):
-        super().__init__(x, y, sprite_images_paths, num_frames, scale_factor)
+    def __init__(self, x, y, num_frames, scale_factor=3.5):
+        super().__init__(x, y, num_frames, scale_factor)
 
         #adding image
         cwd = os.path.dirname(__file__)
-        self.image = pygame.image.load(os.path.join(cwd, "img", "Bird_2.png")) #, imagePath))
+        self.sprite_images = pygame.image.load(os.path.join(cwd, "img", "Bird_2.png"))
+        self.frame_width = self.sprite_images.get_width() // num_frames
+        self.frame_height = self.sprite_images.get_height()
+        self.frames = [pygame.transform.scale(
+            self.sprite_images.subsurface((i * self.frame_width, 0, self.frame_width, self.frame_height)),
+            (int(self.frame_width * scale_factor), int(self.frame_height * scale_factor)))
+            for i in range(num_frames)] #Scale and add frame to the sprite
+        
+        self.image = self.frames[self.index]
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
     def flap(self):
         print("the bird is flapping 1.5 time faster")
-        self.rect.y += 1.5 * self.Y_velocity
+        self.rect.y += 2 * self.Y_velocity
         
 class Bird3(FlappyBird):
-    def __init__(self, x, y, sprite_images_paths, num_frames, scale_factor=3.5):
-        super().__init__(x, y, sprite_images_paths, num_frames, scale_factor)
+    def __init__(self, x, y, num_frames, scale_factor=3.5):
+        super().__init__(x, y, num_frames, scale_factor)
 
         #adding image
         cwd = os.path.dirname(__file__)
-        self.image = pygame.image.load(os.path.join(cwd, "img", "Bird_3.png")) #, imagePath))
+        self.sprite_images = pygame.image.load(os.path.join(cwd, "img", "Bird_3.png"))
+        self.frame_width = self.sprite_images.get_width() // num_frames
+        self.frame_height = self.sprite_images.get_height()
+        self.frames = [pygame.transform.scale(
+            self.sprite_images.subsurface((i * self.frame_width, 0, self.frame_width, self.frame_height)),
+            (int(self.frame_width * scale_factor), int(self.frame_height * scale_factor)))
+            for i in range(num_frames)] #Scale and add frame to the sprite
+        
+        self.image = self.frames[self.index]
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
     def flap(self):
         print("the bird is flapping 2 time faster")
-        self.rect.y += 2 * self.Y_velocity
+        self.rect.y += 4 * self.Y_velocity
 
