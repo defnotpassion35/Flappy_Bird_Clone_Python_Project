@@ -19,6 +19,7 @@ class Game:
         # Set up colors 
 
         self.GRAY = (128, 128, 128)
+        self.GREEN = (0, 255, 0)
 
         # Set up clock
         self.clock = pygame.time.Clock()
@@ -114,7 +115,7 @@ class Game:
 
             # Draw pipes first
             for pipe in self.pipes:
-                pipe.draw(self.screen, self.GRAY)  # Pass the pipe color
+                pipe.draw(self.screen, self.GREEN)  # Pass the pipe color
 
             # Draw bird last
             self.bird.draw(self.screen)

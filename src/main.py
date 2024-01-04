@@ -16,7 +16,9 @@ pygame.display.set_caption("Flappy Bird")
 # Set up colors
 white = (255, 255, 255)
 GRAY = (128, 128, 128)
-
+GREEN = (0, 255, 0)
+BLUE = (0, 0, 255)
+RED = (255, 0, 0)
 
 # Set up clock
 clock = pygame.time.Clock()
@@ -78,7 +80,7 @@ while True:
 
     # Draw pipes first
     for pipe in pipes:
-        pipe.draw(screen, GRAY)  # Pass the pipe color
+        pipe.draw(screen, GREEN)  # Pass the pipe color
 
     # Draw bird last
     bird.draw(screen)
