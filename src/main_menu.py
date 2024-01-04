@@ -26,7 +26,7 @@ class Menu():
         ]
 
         # load button images
-        start_img = pygame.image.load('src/img/PH_start_button.png').convert_alpha()
+        start_img = pygame.image.load('src/img/start_button.png').convert_alpha()
         exit_img = pygame.image.load('src/img/PHexit_button.png').convert_alpha()
         selection_img = pygame.image.load('src/img/selection_button.png').convert_alpha()
         video_img = pygame.image.load('src/img/video_ph.png').convert_alpha()
@@ -39,10 +39,11 @@ class Menu():
         self.tiles = math.ceil(screen_width / self.bg_width) + 2
 
         # Create button instance
-        self.start_button = button.Button(860, 370, start_img, 1)
+        self.start_button = button.Button(860, 370, start_img, 0.25)
         self.end_button = button.Button(860, 700, exit_img, 1)
         self.selection_button = button.Button(860, 570, selection_img, 1)
         self.backmenu_button = button.Button(304, 680, backmenu_img, 1)
+        # Create Text
 
     def draw_text(self, text, x, y):
         img = self.font.render(text, True, self.TEXT_COL)
@@ -95,6 +96,7 @@ class Menu():
                         game.run()
                     if self.selection_button.draw(self.screen):
                         self.menu_state = "selection"
+                        self.draw_text("This is Default Bird", 800, 540)
                     if self.end_button.draw(self.screen):
                         run = False
                 # Check if the selection menu is open

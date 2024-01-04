@@ -76,7 +76,7 @@ class Bird1(FlappyBird):
         super().__init__(x, y, num_frames, scale_factor)
         #adding image
         cwd = os.path.dirname(__file__)
-        self.sprite_images = pygame.image.load(os.path.join(cwd, "img", "Bird_1.png"))
+        self.sprite_images = pygame.image.load(os.path.join(cwd, "img", "SpriteBird_1.png"))
         self.frame_width = self.sprite_images.get_width() // num_frames
         self.frame_height = self.sprite_images.get_height()
         self.frames = [pygame.transform.scale(
@@ -98,7 +98,7 @@ class Bird2(FlappyBird):
 
         #adding image
         cwd = os.path.dirname(__file__)
-        self.sprite_images = pygame.image.load(os.path.join(cwd, "img", "Bird_2.png"))
+        self.sprite_images = pygame.image.load(os.path.join(cwd, "img", "SpriteBird_2.png"))
         self.frame_width = self.sprite_images.get_width() // num_frames
         self.frame_height = self.sprite_images.get_height()
         self.frames = [pygame.transform.scale(
@@ -119,7 +119,7 @@ class Bird3(FlappyBird):
 
         #adding image
         cwd = os.path.dirname(__file__)
-        self.sprite_images = pygame.image.load(os.path.join(cwd, "img", "Bird_3.png"))
+        self.sprite_images = pygame.image.load(os.path.join(cwd, "img", "SpriteBird_3.png"))
         self.frame_width = self.sprite_images.get_width() // num_frames
         self.frame_height = self.sprite_images.get_height()
         self.frames = [pygame.transform.scale(
