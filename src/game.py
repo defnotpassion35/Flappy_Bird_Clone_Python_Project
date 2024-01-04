@@ -1,13 +1,13 @@
 import pygame
 import sys
 import random
-from bird import *
+from bird import Bird1, Bird2, Bird3
 from pipe import Pipe
 import math
 from button import Button
 
 class Game:
-    def __init__(self, screen_width, screen_height):
+    def __init__(self, screen_width, screen_height, selected_character=None):
         pygame.init()
 
         # Set up the screen
@@ -27,8 +27,18 @@ class Game:
         self.birds = pygame.sprite.Group()
         self.pipes = pygame.sprite.Group()
 
-        # Set up the bird
-        self.bird = Bird2(screen_width // 4, screen_height // 2, num_frames=4)  # Initial sprite position
+        # # Set up the bird
+        # self.bird = Bird1(screen_width // 4, screen_height // 2, num_frames=4)  # Initial sprite position
+        # self.birds.add(self.bird)
+
+         # Use Selected Character
+        self.selected_character = selected_character
+        if self.selected_character:
+            # Create the bird based on the selected character
+            self.bird = self.selected_character(screen_width // 4, screen_height // 2, num_frames=4)
+        else:
+            self.bird = Bird1(screen_width // 4, screen_height // 2, num_frames=4)
+
         self.birds.add(self.bird)
 
         # Set up pipes

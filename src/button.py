@@ -1,9 +1,9 @@
 import pygame
-import button
 import math
 
 class Button():
     def __init__(self, x, y, image, scale, selected_frame_index=0):
+        super().__init__()
         width = image.get_width()
         height = image.get_height()
         self.image = pygame.transform.scale(image, (int(width * scale), int(height * scale)))
@@ -24,10 +24,12 @@ class Button():
             if pygame.mouse.get_pressed()[0] == 1 and not self.clicked:
                 self.clicked = True
                 action = True
-
+    
         if pygame.mouse.get_pressed()[0] == 0:
             self.clicked = False
 
         surface.blit(self.image, (self.rect.x, self.rect.y))
 
+        if self.clicked:
+            pygame.draw.rect(surface, self.outline_color, self.rect, self.outline_width)
         return action

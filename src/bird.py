@@ -110,7 +110,7 @@ class Bird2(FlappyBird):
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
     def flap(self):
-        print("the bird is flapping 1.5 time faster")
+        print("the bird is flapping 2 time faster")
         self.rect.y += 2 * self.Y_velocity
         
 class Bird3(FlappyBird):
@@ -131,6 +131,6 @@ class Bird3(FlappyBird):
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
     def flap(self):
-        print("the bird is flapping 2 time faster")
+        print("the bird is flapping 4 time faster")
         self.rect.y += 4 * self.Y_velocity
 
