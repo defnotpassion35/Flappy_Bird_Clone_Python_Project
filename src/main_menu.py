@@ -126,9 +126,9 @@ if __name__ == "__main__":
     pygame.display.set_caption("Main Menu")
 
     character_selection_buttons = [
-        button.Button(400, 600, pygame.image.load('src/img/Bird_1.png').convert_alpha(), 1),
-        button.Button(800, 600, pygame.image.load('src/img/Bird_2.png').convert_alpha(), 1),
-        button.Button(1000, 600, pygame.image.load('src/img/Bird_3.png').convert_alpha(), 1),
+        button.Button(600, 400, pygame.image.load('src/img/Bird_1.png').convert_alpha(), 1),
+        button.Button(900, 400, pygame.image.load('src/img/Bird_2.png').convert_alpha(), 1),
+        button.Button(1200, 400, pygame.image.load('src/img/Bird_3.png').convert_alpha(), 1),
     ]
 
     menu = Menu(screen, screen_height, screen_height)
