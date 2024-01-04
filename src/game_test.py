@@ -2,6 +2,9 @@ import pygame
 import sys
 import random
 from bird import FlappyBird 
+from bird import Bird1
+from bird import Bird2
+from bird import Bird3
 from pipe import Pipe
 import math
 from button import Button
@@ -17,7 +20,6 @@ class Game:
         pygame.display.set_caption("Flappy Bird")
 
         # Set up colors 
-
         self.GRAY = (128, 128, 128)
         self.GREEN = (0, 255, 0)
 
@@ -29,7 +31,7 @@ class Game:
         self.pipes = pygame.sprite.Group()
 
         # Set up the bird
-        self.bird = FlappyBird(screen_width // 4, screen_height // 2, "plane.png")  # Initial position
+        self.bird = Bird2(screen_width // 4, screen_height // 2, "plane.png")  # Initial position
         self.birds.add(self.bird)
 
         # Set up pipes
@@ -147,18 +149,17 @@ class GameOver:
         backmenu_img = pygame.image.load('src/img/back_menu.png').convert_alpha()
 
         # Create button instances using your custom Button class
-        self.start_button = Button(860, 450, start_img, 1)  # Adjust coordinates
-        self.end_button = Button(860, 560, exit_img, 1)  # Adjust coordinates
-        self.backmenu_button = Button(860, 680, backmenu_img, 1)
+        self.start_button = Button(50, 50, start_img, 1)  # Adjust coordinates
+        self.end_button = Button(50, 150, exit_img, 1)  # Adjust coordinates
+        self.backmenu_button = Button(304, 680, backmenu_img, 1)
 
     def game_over_screen(self, x_position, y_position):
         print(self.screen_width, self.screen_height)
         font = pygame.font.Font(None, 74)
         text = font.render("Game Over", True, (255, 0, 0))
-        
-        #X as Width and Y as Height for the Game Over Text Dimension
-        x_position = 840    
-        y_position = 450
+
+        x_position = 100
+        y_position = 200
         text_rect = text.get_rect(topleft=(x_position, y_position))  # define the dimension
         self.screen.blit(text, text_rect)
 
