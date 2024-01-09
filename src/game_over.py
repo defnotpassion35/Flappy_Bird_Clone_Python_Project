@@ -12,14 +12,14 @@ class GameOver:
         self.main_menu = "main_menu"
         self.game_instance = None
         # Load button images
-        start_img = pygame.image.load('src/img/PHstart_button.png').convert_alpha()
-        exit_img = pygame.image.load('src/img/PHexit_button.png').convert_alpha()
+        start_img = pygame.image.load('src/img/start_button.png').convert_alpha()
+        exit_img = pygame.image.load('src/img/exit_button.png').convert_alpha()
         backmenu_img = pygame.image.load('src/img/back_menu.png').convert_alpha()
         
         # Create button instances using your custom Button class
-        self.start_button = Button(50, 50, start_img, 1)  # Adjust coordinates
-        self.end_button = Button(50, 150, exit_img, 1)  # Adjust coordinates
-        self.backmenu_button = Button(304, 680, backmenu_img, 1)
+        self.start_button = Button(50, 50, start_img, 0.25)  # Adjust coordinates
+        self.end_button = Button(50, 150, exit_img, 0.25)  # Adjust coordinates
+        self.backmenu_button = Button(304, 680, backmenu_img, 0.25)
     def game_over_screen(self, x_position, y_position):
         print(self.screen_width, self.screen_height)
         font = pygame.font.Font(None, 74)
