@@ -19,7 +19,7 @@ class Menu():
         self.selected_character_button = None  # You should declare a variable here
 
         # Insert Character Variable
-        self.character_selection = [
+        self.character_selection = [ 
             button.Button(400, 600, pygame.image.load('src/img/Bird_1.png').convert_alpha(), 1),
             button.Button(800, 600, pygame.image.load('src/img/Bird_2.png').convert_alpha(), 1),
             button.Button(1000, 600, pygame.image.load('src/img/Bird_3.png').convert_alpha(), 1),
@@ -108,7 +108,7 @@ class Menu():
                         if char_button.draw(self.screen):
                             self.selected_character_button = char_button
                             print(f"selected character: {self.selected_character_button}")
-
+ 
 
                     if self.backmenu_button.draw(self.screen):
                         self.menu_state = "main_menu"

@@ -54,7 +54,7 @@ class Game:
         self.game_over = False
         self.game_over_screen = GameOver(self.screen, self.screen_width, self.screen_height)
         # Set up a Paused Screen
-        self.game_paused = False
+        self.game_paused = False 
 
         #load bg image
         self.og_bg_img = pygame.image.load("src/img/MenuBackground.png").convert()
@@ -68,7 +68,7 @@ class Game:
             self.screen.blit(self.og_bg_img, (i * self.bg_width + self.scroll, 0))
 
         #Scroll background
-        self.scroll -= 1.5
+        self.scroll -= 1.0
 
         #Reset scroll
         if abs(self.scroll) > self.bg_width:
@@ -97,7 +97,7 @@ class Game:
             self.pipe_spawn_timer += 1
             if self.pipe_spawn_timer == self.pipe_spawn_frequency:
                 pipe_height = random.randint(200, 600)
-                new_pipe = Pipe(self.screen_width, pipe_height, self.pipe_gap)
+                new_pipe = Pipe(self.screen_width, pipe_height, self.pipe_gap) 
                 self.pipes.add(new_pipe)
                 self.pipe_spawn_timer = 0
 
@@ -108,17 +108,17 @@ class Game:
 
             # Check for collisions with pipes
             for pipe in self.pipes:
-                if self.bird.rect.x < pipe.x + pipe.width and self.bird.rect.x + self.bird.rect.width > pipe.x:
-                    if self.bird.rect.y < pipe.height or self.bird.rect.y + self.bird.rect.height > pipe.height + pipe.gap:
+                if self.bird.rect.x < pipe.get_x() + pipe.get_width() and self.bird.rect.x + self.bird.rect.width > pipe.get_x():
+                    if self.bird.rect.y < pipe.get_height() or self.bird.rect.y + self.bird.rect.height > pipe.get_height() + pipe.get_gap():
                         self.game_over = True
                         print("Ouch! You hit a pipe!")
-               
+
             # Draw BG
             self.BackGround()
             
             #increasing score
             for pipe in self.pipes :
-                if self.bird.x == pipe.x  + 80:  #and not game_over:
+                if self.bird.x == pipe._x  + 80:  #and not game_over:
                     self.score += 1
                     print(self.score)
 
