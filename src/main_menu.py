@@ -44,9 +44,9 @@ class Menu():
         self.tiles = math.ceil(screen_width / self.bg_width) + 2
 
         # Create button instance
-        self.start_button = button.Button(860, 450, start_img, 0.25)
-        self.end_button = button.Button(860, 700, exit_img, 0.25)
-        self.selection_button = button.Button(860, 570, selection_img, 0.25)
+        self.start_button = button.Button(860, 300, start_img, 0.25)
+        self.end_button = button.Button(860, 900, exit_img, 0.25)
+        self.selection_button = button.Button(860, 600, selection_img, 0.25)
         self.backmenu_button = button.Button(808, 680, backmenu_img, 0.25)
         # Create Img Mask
         image_mask = pygame.mask.from_surface(selection_img)
