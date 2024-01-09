@@ -23,6 +23,9 @@ class Menu():
             button.Button(400, 600, pygame.image.load('src/img/Bird_1.png').convert_alpha(), 1),
             button.Button(800, 600, pygame.image.load('src/img/Bird_2.png').convert_alpha(), 1),
             button.Button(1000, 600, pygame.image.load('src/img/Bird_3.png').convert_alpha(), 1),
+            button.Button(550, 600, pygame.image.load('src/img/1.0x.png').convert_alpha(), 0.15),
+            button.Button(850, 600, pygame.image.load('src/img/2.0x.png').convert_alpha(), 0.15),
+            button.Button(1150, 600, pygame.image.load('src/img/4.0x.png').convert_alpha(), 0.15)
         ]
 
         # load button images
@@ -45,7 +48,8 @@ class Menu():
         self.end_button = button.Button(860, 700, exit_img, 0.25)
         self.selection_button = button.Button(860, 570, selection_img, 0.25)
         self.backmenu_button = button.Button(304, 680, backmenu_img, 0.25)
-        # Create Text
+        # Create Img Mask
+        image_mask = pygame.mask.from_surface(selection_img)
 
     def draw_text(self, text, x, y):
         img = self.font.render(text, True, self.TEXT_COL)
@@ -128,9 +132,12 @@ if __name__ == "__main__":
     pygame.display.set_caption("Main Menu")
 
     character_selection_buttons = [
-        button.Button(600, 400, pygame.image.load('src/img/Bird_1.png').convert_alpha(), 1),
-        button.Button(900, 400, pygame.image.load('src/img/Bird_2.png').convert_alpha(), 1),
-        button.Button(1200, 400, pygame.image.load('src/img/Bird_3.png').convert_alpha(), 1),
+        button.Button(600, 600, pygame.image.load('src/img/Bird_1.png').convert_alpha(), 1),
+        button.Button(900, 600, pygame.image.load('src/img/Bird_2.png').convert_alpha(), 1),
+        button.Button(1200, 600, pygame.image.load('src/img/Bird_3.png').convert_alpha(), 1),
+        button.Button(550, 600, pygame.image.load('src/img/1.0x.png').convert_alpha(), 0.15),
+        button.Button(850, 600, pygame.image.load('src/img/2.0x.png').convert_alpha(), 0.15),
+        button.Button(1150, 600, pygame.image.load('src/img/4.0x.png').convert_alpha(), 0.15)
     ]
 
     menu = Menu(screen, screen_height, screen_height)
