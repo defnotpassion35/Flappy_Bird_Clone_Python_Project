@@ -2,13 +2,12 @@ import pygame
 import button
 from game import Game
 import math
-from bird import *
+from bird import Bird1, Bird2, Bird3
 
-class Menu():
+class Menu:
     def __init__(self, screen, screen_height, screen_width):
         pygame.display.init()
-        screen_height = 1080
-        screen_width = 1920
+        # Use the provided screen dimensions
         self.screen = screen
         self.game_paused = False
         self.menu_state = "main_menu"
@@ -16,13 +15,15 @@ class Menu():
         pygame.font.init()  # initialize font module
         self.font = pygame.font.SysFont("arial", 40)
         self.TEXT_COL = (0, 0, 0)
-        self.selected_character_button = None  # You should declare a variable here
+        self.selected_character_button = None
+        self.selected_character = None
 
         # Insert Character Variable
-        self.character_selection = [ 
-            button.Button(600, 550, pygame.image.load('src/img/Bird_1.png').convert_alpha(), 1),
-            button.Button(900, 550, pygame.image.load('src/img/Bird_2.png').convert_alpha(), 1),
-            button.Button(1200, 550, pygame.image.load('src/img/Bird_3.png').convert_alpha(), 1),
+        # Removed hardcoded screen dimensions
+        self.character_selection = [
+            button.Button(600, 600, pygame.image.load('src/img/Bird_1.png').convert_alpha(), 1),
+            button.Button(900, 600, pygame.image.load('src/img/Bird_2.png').convert_alpha(), 1),
+            button.Button(1200, 600, pygame.image.load('src/img/Bird_3.png').convert_alpha(), 1),
             button.Button(550, 600, pygame.image.load('src/img/1.0x.png').convert_alpha(), 0.15),
             button.Button(850, 600, pygame.image.load('src/img/2.0x.png').convert_alpha(), 0.15),
             button.Button(1150, 600, pygame.image.load('src/img/4.0x.png').convert_alpha(), 0.15)
@@ -33,9 +34,12 @@ class Menu():
         exit_img = pygame.image.load('src/img/exit_button.png').convert_alpha()
         selection_img = pygame.image.load('src/img/selection_button.png').convert_alpha()
         backmenu_img = pygame.image.load('src/img/back_menu.png').convert_alpha()
-        speed_1 = pygame.image.load('src/img/1.0x.png').convert_alpha()
-        speed_2 = pygame.image.load('src/img/2.0x.png').convert_alpha()
-        speed_4 = pygame.image.load('src/img/4.0x.png').convert_alpha()
+        # Removed unused speed buttons
+        # Create button instance
+        self.start_button = button.Button(860, 470, start_img, 0.25)
+        self.end_button = button.Button(860, 700, exit_img, 0.25)
+        self.selection_button = button.Button(860, 570, selection_img, 0.25)
+        self.backmenu_button = button.Button(304, 680, backmenu_img, 0.25)
 
         # load bg image
         self.og_bg_img = pygame.image.load("src/img/MenuBackground.png").convert()
@@ -43,18 +47,13 @@ class Menu():
         self.scroll = 0
         self.tiles = math.ceil(screen_width / self.bg_width) + 2
 
-        # Create button instance
-        self.start_button = button.Button(860, 300, start_img, 0.25)
-        self.end_button = button.Button(860, 900, exit_img, 0.25)
-        self.selection_button = button.Button(860, 600, selection_img, 0.25)
-        self.backmenu_button = button.Button(808, 680, backmenu_img, 0.25)
         # Create Img Mask
-        image_mask = pygame.mask.from_surface(selection_img)
+        self.image_mask = pygame.mask.from_surface(selection_img)
 
     def draw_text(self, text, x, y):
         img = self.font.render(text, True, self.TEXT_COL)
         self.screen.blit(img, (x, y))
-  
+
     def handle_events(self):
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
@@ -64,9 +63,14 @@ class Menu():
                 pygame.quit()
                 quit()
 
+    def reset_button_states(self):
+        for char_button in self.character_selection:
+            char_button.reset_state()
+
     def run(self):
         # Game loop
         run = True
+        selected_character = None
         while run:
             # Fill the screen
             self.screen.fill((11, 241, 255))
@@ -86,44 +90,48 @@ class Menu():
                     # Draw pause screen buttons
                     if self.start_button.draw(self.screen):
                         self.game_paused = False
-                        selected_character_button = self.selected_character_button
+                        self.selected_character_button = self.selected_character_button
 
-                        if selected_character_button:
-                            if selected_character_button == self.character_selection[0]:
+                        if self.selected_character_button:
+                            if self.selected_character_button == self.character_selection[0]:
                                 selected_character = Bird1
-                            elif selected_character_button == self.character_selection[1]:
+                            elif self.selected_character_button == self.character_selection[1]:
                                 selected_character = Bird2
-                            elif selected_character_button == self.character_selection[2]:
+                            elif self.selected_character_button == self.character_selection[2]:
                                 selected_character = Bird3
-                            if selected_character_button == self.character_selection[3]:
+                            if self.selected_character_button == self.character_selection[3]:
                                 selected_character = Bird1
-                            elif selected_character_button == self.character_selection[4]:
+                            elif self.selected_character_button == self.character_selection[4]:
                                 selected_character = Bird2
-                            elif selected_character_button == self.character_selection[5]:
+                            elif self.selected_character_button == self.character_selection[5]:
                                 selected_character = Bird3
                         else:
                             selected_character = None
 
-                        game = Game(1920, 1080, selected_character=selected_character)
+                        game = Game(1920, 1080, menu=self, selected_character=selected_character)
                         game.run()
+
                     if self.selection_button.draw(self.screen):
                         self.menu_state = "selection"
-                        self.draw_text("This is Default Bird", 600, 540)
                     if self.end_button.draw(self.screen):
                         run = False
                 # Check if the selection menu is open
-                if self.menu_state == "selection":
+                elif self.menu_state == "selection":
                     # Draw different option buttons on the screen
                     for char_button in self.character_selection:
                         if char_button.draw(self.screen):
                             self.selected_character_button = char_button
                             print(f"selected character: {self.selected_character_button}")
- 
 
                     if self.backmenu_button.draw(self.screen):
                         self.menu_state = "main_menu"
+                        # Reset selected character button when returning to the main menu
+                        self.reset_button_states()
+
+                    for char_button in self.character_selection:
+                        char_button.reset_state()
             else:
-                self.draw_text("Press Space to Play", 800, 570)  # Welcome Text Dimension
+                self.draw_text("Press Space to Play", 800, 540)  # Welcome Text Dimension
 
             self.handle_events()
             pygame.display.update()
@@ -138,9 +146,9 @@ if __name__ == "__main__":
     pygame.display.set_caption("Main Menu")
 
     character_selection_buttons = [
-        button.Button(600, 550, pygame.image.load('src/img/Bird_1.png').convert_alpha(), 1),
-        button.Button(900, 550, pygame.image.load('src/img/Bird_2.png').convert_alpha(), 1),
-        button.Button(1200, 550, pygame.image.load('src/img/Bird_3.png').convert_alpha(), 1),
+        button.Button(600, 600, pygame.image.load('src/img/Bird_1.png').convert_alpha(), 1),
+        button.Button(900, 600, pygame.image.load('src/img/Bird_2.png').convert_alpha(), 1),
+        button.Button(1200, 600, pygame.image.load('src/img/Bird_3.png').convert_alpha(), 1),
         button.Button(550, 600, pygame.image.load('src/img/1.0x.png').convert_alpha(), 0.15),
         button.Button(850, 600, pygame.image.load('src/img/2.0x.png').convert_alpha(), 0.15),
         button.Button(1150, 600, pygame.image.load('src/img/4.0x.png').convert_alpha(), 0.15)

@@ -49,3 +49,6 @@ class Button():
         # Check if the alpha value of the pixel is greater than the threshold
         alpha_value = self.image.get_at(relative_pos).a
         return alpha_value > 127
+    
+    def reset_state(self):
+        self.is_clicked = False
