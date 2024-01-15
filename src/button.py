@@ -1,20 +1,24 @@
 import pygame
 import math
 
-class Button():
+
+class Button:
     def __init__(self, x, y, image, scale, selected_frame_index=0):
         super().__init__()
         width = image.get_width()
         height = image.get_height()
-        self.image = pygame.transform.scale(image, (int(width * scale), int(height * scale)))
-        self.original_image = self.image.copy()
+        self.image = pygame.transform.scale(
+            image, (int(width * scale), int(height * scale))
+        )
         self.rect = self.image.get_rect()
         self.rect.topleft = (x, y)
         self.clicked = False
         self.selected_frame_index = selected_frame_index
 
         # Create a mask based on the alpha channel
-        self.alpha_mask = pygame.mask.from_surface(self.image, 127)  # 127 is the threshold for alpha values
+        self.alpha_mask = pygame.mask.from_surface(
+            self.image, 127
+        )  # 127 is the threshold for alpha values
 
         # self.outline_color = (255, 0, 0)  # Select an outline color
         # self.outline_width = 5  # Choose how thicc the hitbox will be
@@ -49,6 +53,6 @@ class Button():
         # Check if the alpha value of the pixel is greater than the threshold
         alpha_value = self.image.get_at(relative_pos).a
         return alpha_value > 127
-    
+
     def reset_state(self):
         self.is_clicked = False

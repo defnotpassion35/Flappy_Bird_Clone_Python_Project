@@ -1,10 +1,10 @@
 import pygame
 import sys
 import random
-from bird import Bird1, Bird2, Bird3
-from pipe import Pipe
 import math
 from button import Button
+from bird import Bird1, Bird2, Bird3
+from pipe import Pipe
 
 class Game:
     def __init__(self, screen_width, screen_height, menu=None, selected_character=None):
@@ -16,6 +16,7 @@ class Game:
         self.screen = pygame.display.set_mode((screen_width, screen_height))
         pygame.display.set_caption("Flappy Bird")
         self.menu = menu
+
         # Set up colors
         self.GRAY = (128, 128, 128)
 
@@ -30,7 +31,9 @@ class Game:
         self.selected_character = selected_character
         if self.selected_character:
             # Create the bird based on the selected character
-            self.bird = self.selected_character(screen_width // 4, screen_height // 2, num_frames=4)
+            self.bird = self.selected_character(
+                screen_width // 4, screen_height // 2, num_frames=4
+            )
         else:
             self.bird = Bird1(screen_width // 4, screen_height // 2, num_frames=4)
 
@@ -47,13 +50,18 @@ class Game:
 
         # Set up game_over screen
         self.game_over = False
-        self.game_over_screen = GameOver(self.screen, self.screen_width, self.screen_height, self)
+        self.game_over_screen = GameOver(
+            self.screen, self.screen_width, self.screen_height, self
+        )
 
         # Load bg image
         self.og_bg_img = pygame.image.load("src/img/MenuBackground.png").convert()
         self.bg_width = self.og_bg_img.get_width()
         self.scroll = 0
         self.tiles = math.ceil(screen_width / self.bg_width) + 2
+
+        # Load custom pipe image
+        self.custom_pipe_img = pygame.image.load("src/img/SimpleStyle1.png").convert_alpha()
 
     def draw_background(self):
         # Draw bg img and change dimension
@@ -63,7 +71,7 @@ class Game:
         # Scroll background
         self.scroll -= 1.0
 
-        # Reset scroll
+        # Reset scroll 
         if abs(self.scroll) > self.bg_width:
             self.scroll = 0
 
@@ -86,25 +94,32 @@ class Game:
         # Spawn pipes
         self.pipe_spawn_timer += 1
         if self.pipe_spawn_timer == self.pipe_spawn_frequency:
-            pipe_height = random.randint(200, 600)
-            new_pipe = Pipe(self.screen_width, pipe_height, self.pipe_gap)
+            new_pipe = Pipe(self.screen_width, self.custom_pipe_img, self.pipe_gap)
             self.pipes.add(new_pipe)
             self.pipe_spawn_timer = 0
 
         # Remove offscreen pipes
-        self.pipes = pygame.sprite.Group(pipe for pipe in self.pipes if not pipe.offscreen())
+        self.pipes = pygame.sprite.Group(
+            pipe for pipe in self.pipes if not pipe.offscreen()
+        )
 
         # Check for collisions with pipes
         for pipe in self.pipes:
-            if self.bird.rect.x < pipe.get_x() + pipe.get_width() and \
-               self.bird.rect.x + self.bird.rect.width > pipe.get_x() and \
-               (self.bird.rect.y < pipe.get_height() or self.bird.rect.y + self.bird.rect.height > pipe.get_height() + pipe.get_gap()):
+            if (
+                self.bird.rect.x < pipe.get_x() + pipe.custom_pipe_img.get_width()
+                and self.bird.rect.x + self.bird.rect.width > pipe.get_x()
+                and (
+                    self.bird.rect.y < pipe.custom_pipe_img.get_height()
+                    or self.bird.rect.y + self.bird.rect.height
+                    > pipe.custom_pipe_img.get_height() + pipe.get_gap()
+                )
+            ):
                 self.game_over = True
                 print("Ouch! You hit a pipe!")
 
         # Increasing score
         for pipe in self.pipes:
-            if self.bird.x == pipe._x + 80:
+            if self.bird.x == pipe.get_x() + 80:
                 self.score += 1
                 print(self.score)
 
@@ -114,7 +129,7 @@ class Game:
 
         # Draw pipes first
         for pipe in self.pipes:
-            pipe.draw(self.screen, self.GRAY)  # Pass the pipe color
+            pipe.draw(self.screen)  # Pass the pipe color
 
         # Draw bird last
         self.bird.draw(self.screen)
@@ -138,6 +153,7 @@ class Game:
 
         self.game_over_screen.show_game_over_screen()
 
+
 class GameOver:
     def __init__(self, screen, screen_width, screen_height, game_instance):
         self.screen = screen
@@ -146,9 +162,9 @@ class GameOver:
         self.game_instance = game_instance
 
         # Load button images
-        start_img = pygame.image.load('src/img/start_button.png').convert_alpha()
-        exit_img = pygame.image.load('src/img/exit_button.png').convert_alpha()
-        backmenu_img = pygame.image.load('src/img/back_menu.png').convert_alpha()
+        start_img = pygame.image.load("src/img/start_button.png").convert_alpha()
+        exit_img = pygame.image.load("src/img/exit_button.png").convert_alpha()
+        backmenu_img = pygame.image.load("src/img/back_menu.png").convert_alpha()
 
         # Create button instances using your custom Button class
         self.start_button = Button(860, 450, start_img, 0.25)  # Adjust coordinates
@@ -167,7 +183,9 @@ class GameOver:
         # X as Width and Y as Height for the Game Over Text Dimension
         x_position = 840
         y_position = 450
-        text_rect = text.get_rect(topleft=(x_position, y_position))  # define the dimension
+        text_rect = text.get_rect(
+            topleft=(x_position, y_position)
+        )  # define the dimension
         self.screen.blit(text, text_rect)
 
         # Draw buttons and handle events
@@ -203,6 +221,7 @@ class GameOver:
 
     def return_menu(self):
         from main_menu import Menu
+
         main_menu = Menu(self.screen, screen_height=1080, screen_width=1920)
         main_menu.reset_button_states()  # Added to reset button states
         main_menu.run()
@@ -210,6 +229,7 @@ class GameOver:
         if main_menu.menu_state == "main_menu":
             pygame.quit()
             sys.exit()
+
 
 if __name__ == "__main__":
     # Use Bird1 as the default character
